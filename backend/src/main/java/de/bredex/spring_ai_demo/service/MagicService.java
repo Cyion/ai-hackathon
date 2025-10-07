@@ -10,6 +10,7 @@ import de.bredex.spring_ai_demo.util.CardUtil;
 
 @Service
 public class MagicService {
+    private final static String SYSTEM_PROMPT = "You are an expert in magic the gathering. Magic the gathering is a card game where players use decks of cards to battle each other. Each card has unique abilities and characteristics. Your task is to help players build their decks by identifiying the best deck of {numberOfCards} cards in a given user deck of arbitrary size. The user will provide you with the his/her deck and you will respond with the best deck containing exactly {numberOfCards} cards.";
 
     private final WebClient webClient;
     private final ChatClient chatClient;
@@ -41,10 +42,8 @@ public class MagicService {
             return this.deckCacheService.get(cardsHash).get();
         }
 
-        final String prompt = String.format(
-                "You are an expert in magic the gathering. Magic the gathering is a card game where players use decks of cards to battle each other. Each card has unique abilities and characteristics. Your task is to help players build their decks by identifiying the best deck of {numberOfCards} cards in a given user deck of arbitrary size. The user will provide you with the his/her deck and you will respond with the best deck containing exactly {numberOfCards} cards.");
-
-        final ModelResponse response = this.chatClient.prompt().system(systemSpec -> systemSpec.text(prompt).param("numberOfCards", count))
+        final ModelResponse response = this.chatClient.prompt()
+                .system(systemSpec -> systemSpec.text(SYSTEM_PROMPT).param("numberOfCards", count))
                 .user(userSpec -> userSpec.text("The card deck is:\n" + String.join(",", cards.toString()))).call()
                 .entity(ModelResponse.class);
         this.deckCacheService.put(cardsHash, response);
