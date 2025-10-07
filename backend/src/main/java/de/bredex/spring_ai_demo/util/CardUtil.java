@@ -4,8 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CardUtil {
+    private CardUtil() {}
 
-    public String extractCardInfo(String json) {
+    public static String extractCardInfo(String json) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode root = mapper.readTree(json);

@@ -3,7 +3,6 @@ package de.bredex.spring_ai_demo.service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
 @Service
