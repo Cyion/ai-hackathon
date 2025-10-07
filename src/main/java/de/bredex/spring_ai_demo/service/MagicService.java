@@ -28,7 +28,6 @@ public class MagicService {
                 .user(userSpec -> userSpec.text("The card deck is:\n" +String.join(",", cards)))        
                 .call()
                 .content();
-        System.out.println(response);
         return cards;
     }
 }
