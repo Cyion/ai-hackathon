@@ -156,12 +156,35 @@ function App() {
                   padding: '15px',
                   backgroundColor: '#34495e',
                   borderRadius: '6px',
-                  border: '1px solid #4a6741'
+                  border: '1px solid #4a6741',
+                  display: 'flex',
+                  gap: '15px'
                 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
-                    <h5 style={{ margin: 0, color: '#f1c40f', fontSize: '18px' }}>{card.name}</h5>
-                    <span style={{ color: '#95a5a6', fontSize: '14px' }}>ID: {card.id}</span>
-                  </div>
+                  {/* Card Image */}
+                  {card.imageUrl && (
+                    <div style={{ flexShrink: 0 }}>
+                      <img 
+                        src={card.imageUrl} 
+                        alt={card.name}
+                        style={{
+                          width: '150px',
+                          height: 'auto',
+                          borderRadius: '8px',
+                          border: '2px solid #61dafb'
+                        }}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  )}
+                  
+                  {/* Card Details */}
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+                      <h5 style={{ margin: 0, color: '#f1c40f', fontSize: '18px' }}>{card.name}</h5>
+                      <span style={{ color: '#95a5a6', fontSize: '14px' }}>ID: {card.id}</span>
+                    </div>
                   
                   <div style={{ marginBottom: '8px' }}>
                     <strong style={{ color: '#e74c3c' }}>Manakosten:</strong> {card.manaCost || 'N/A'} 
@@ -211,6 +234,7 @@ function App() {
                       </div>
                     </div>
                   )}
+                  </div>
                 </div>
               ))}
             </div>

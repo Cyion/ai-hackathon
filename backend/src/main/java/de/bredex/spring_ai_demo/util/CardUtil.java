@@ -20,7 +20,8 @@ public class CardUtil {
             final String type = card.path("type").asText();
             final String text = card.path("text").asText();
             final String rulings = card.path("rulings").toString();
-            return new MagicCard(id, name, manaCost, cmc, type, text, rulings);
+            final String imageUrl = card.path("imageUrl").asText();
+            return new MagicCard(id, name, manaCost, cmc, type, text, rulings, imageUrl);
         } catch (Exception e) {
             throw new RuntimeException("Fehler beim Parsen der Kartendaten: " + e.getMessage());
         }
