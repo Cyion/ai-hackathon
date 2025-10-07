@@ -21,11 +21,11 @@ public class MagicController {
     }
 
     @GetMapping("/cut")
-    public List<String> cutDeck(@RequestParam String deck) {
+    public String cutDeck(@RequestParam String deck) {
         final List<String> cards = new ArrayList<>();
 
         for (String cardId : deck.split(",")) {
-            final String card = this.magicService.getCard(cardId).block(Duration.ofMinutes(1));
+            final String card = this.magicService.getCard(cardId);
             cards.add(card);
         }
         return this.magicService.cutDeck(cards);
