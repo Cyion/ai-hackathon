@@ -23,7 +23,7 @@ public class MagicController {
         final List<MagicCard> cards = new ArrayList<>();
 
         for (String cardId : deck.split(",")) {
-            final MagicCard card = this.magicService.getCard(cardId);
+            final MagicCard card = this.magicService.getCard(cardId.trim());
             cards.add(card);
         }
         return this.magicService.cutDeck(cards, count);
