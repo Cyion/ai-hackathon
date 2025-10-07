@@ -72,7 +72,7 @@ function App() {
           
           <div style={{ marginBottom: '15px' }}>
             <label htmlFor="count" style={{ display: 'block', marginBottom: '5px' }}>
-              Anzahl der Schnitte:
+              Anzahl der Karten:
             </label>
             <input
               id="count"
