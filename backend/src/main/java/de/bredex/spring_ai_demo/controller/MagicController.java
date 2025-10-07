@@ -19,13 +19,13 @@ public class MagicController {
     }
 
     @GetMapping("/cut")
-    public ModelResponse cutDeck(@RequestParam String deck) {
+    public ModelResponse cutDeck(@RequestParam String deck, @RequestParam int count) {
         final List<MagicCard> cards = new ArrayList<>();
 
         for (String cardId : deck.split(",")) {
             final MagicCard card = this.magicService.getCard(cardId);
             cards.add(card);
         }
-        return this.magicService.cutDeck(cards);
+        return this.magicService.cutDeck(cards, count);
     }
 }
