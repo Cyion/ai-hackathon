@@ -11,22 +11,22 @@ import de.bredex.spring_ai_demo.util.CardUtil;
 public class MagicService {
     private final WebClient webClient;
     private final ChatClient chatClient;
-    private final CacheService<String, String> cardCacheService;
-    private final CacheService<String, String> deckCacheService;
+    private final CacheService<String, MagicCard> cardCacheService;
+    private final CacheService<String, ModelResponse> deckCacheService;
 
-    public MagicService(WebClient.Builder webClientBuilder, ChatClient.Builder builder, CacheService<String, String> cardCacheService, CacheService<String, String> deckCacheService) {
+    public MagicService(WebClient.Builder webClientBuilder, ChatClient.Builder builder, CacheService<String, MagicCard> cardCacheService, CacheService<String, ModelResponse> deckCacheService) {
         this.webClient = webClientBuilder.baseUrl("https://api.magicthegathering.io/v1/cards").build();
         this.chatClient = builder.build();
         this.cardCacheService = cardCacheService;
         this.deckCacheService = deckCacheService;
     }
 
-    public String getCard(String id) {
+    public MagicCard getCard(String id) {
         if (this.cardCacheService.contains(id)) {
             return this.cardCacheService.get(id).get();
         }
 
-        final String card = this.webClient.get().uri("/{id}", id)
+        final MagicCard card = this.webClient.get().uri("/{id}", id)
                 .retrieve()
                 .bodyToMono(String.class)
                 .map(CardUtil::extractCardInfo)
@@ -35,18 +35,18 @@ public class MagicService {
 		return card;
 	}
 
-    public String cutDeck(List<String> cards) {
+    public ModelResponse cutDeck(List<MagicCard> cards) {
         final String cardsHash = String.valueOf(Objects.hash(cards));
         
         if (this.deckCacheService.contains(cardsHash)) {
             return this.deckCacheService.get(cardsHash).get();
         }
 
-        final String response = this.chatClient.prompt()
+        final ModelResponse response = this.chatClient.prompt()
                 .system(systemSpec -> systemSpec.text("You are an expert in magic the gathering. Magic the gathering is a card game where players use decks of cards to battle each other. Each card has unique abilities and characteristics. Your task is to help players build their decks by identifiying the best deck of five cards in a given user deck of arbitrary size. The user will provide you with the his/her deck and you will respond with the best deck containing exactly five cards."))
-                .user(userSpec -> userSpec.text("The card deck is:\n" +String.join(",", cards)))        
+                .user(userSpec -> userSpec.text("The card deck is:\n" +String.join(",", cards.toString())))        
                 .call()
-                .content();
+                .entity(ModelResponse.class);
         this.deckCacheService.put(cardsHash, response);
         return response;
     }

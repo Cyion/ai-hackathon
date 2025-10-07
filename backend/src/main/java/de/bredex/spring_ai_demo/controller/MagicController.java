@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import de.bredex.spring_ai_demo.service.MagicCard;
 import de.bredex.spring_ai_demo.service.MagicService;
+import de.bredex.spring_ai_demo.service.ModelResponse;
 
 @RestController
 public class MagicController {
@@ -16,11 +19,11 @@ public class MagicController {
     }
 
     @GetMapping("/cut")
-    public String cutDeck(@RequestParam String deck) {
-        final List<String> cards = new ArrayList<>();
+    public ModelResponse cutDeck(@RequestParam String deck) {
+        final List<MagicCard> cards = new ArrayList<>();
 
         for (String cardId : deck.split(",")) {
-            final String card = this.magicService.getCard(cardId);
+            final MagicCard card = this.magicService.getCard(cardId);
             cards.add(card);
         }
         return this.magicService.cutDeck(cards);
