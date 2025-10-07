@@ -3,24 +3,27 @@ package de.bredex.spring_ai_demo.service;
 import java.util.List;
 import java.util.Objects;
 
+import de.bredex.spring_ai_demo.util.CardUtil;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-
 @Service
 public class MagicService {
+
     private final WebClient webClient;
     private final ChatClient chatClient;
     private final CacheService<String, String> cardCacheService;
     private final CacheService<String, String> deckCacheService;
+    private final CardUtil cardUtil;
 
-    public MagicService(WebClient.Builder webClientBuilder, ChatClient.Builder builder, CacheService cardCacheService, CacheService deckCacheService) {
+    public MagicService(WebClient.Builder webClientBuilder, ChatClient.Builder builder, CacheService<String, String> cardCacheService, CacheService<String, String> deckCacheService) {
         this.webClient = webClientBuilder.baseUrl("https://api.magicthegathering.io/v1/cards").build();
         this.chatClient = builder.build();
         this.cardCacheService = cardCacheService;
         this.deckCacheService = deckCacheService;
+        this.cardUtil = new CardUtil();
     }
 
     public String getCard(String id) {
@@ -28,7 +31,11 @@ public class MagicService {
             return this.cardCacheService.get(id).get();
         }
 
-        final String card = this.webClient.get().uri("/{id}", id).retrieve().bodyToMono(String.class).block();
+        final String card = this.webClient.get().uri("/{id}", id)
+                .retrieve()
+                .bodyToMono(String.class)
+                .map(cardUtil::extractCardInfo)
+                .block();
         this.cardCacheService.put(id, card);
 		return card;
 	}
