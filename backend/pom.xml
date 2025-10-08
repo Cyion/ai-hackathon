@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>de.bredex</groupId>
-	<artifactId>spring-ai-demo</artifactId>
+	<artifactId>mtg-deck-cutter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-ai-demo</name>
-	<description>Spring AI demo using Open AI</description>
+	<name>mtg-deck-cutter</name>
+	<description>Magic the Gathering deck cutter</description>
 	<url/>
 	<licenses>
 		<license/>
