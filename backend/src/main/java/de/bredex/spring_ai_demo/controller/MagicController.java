@@ -5,10 +5,9 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import de.bredex.spring_ai_demo.service.MagicCard;
+import de.bredex.spring_ai_demo.model.MagicCard;
+import de.bredex.spring_ai_demo.model.ModelResponse;
 import de.bredex.spring_ai_demo.service.MagicService;
-import de.bredex.spring_ai_demo.service.ModelResponse;
 
 @RestController
 public class MagicController {

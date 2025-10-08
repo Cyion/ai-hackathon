@@ -2,7 +2,7 @@ package de.bredex.spring_ai_demo.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.bredex.spring_ai_demo.service.MagicCard;
+import de.bredex.spring_ai_demo.model.MagicCard;
 
 public class CardUtil {
     private CardUtil() {}

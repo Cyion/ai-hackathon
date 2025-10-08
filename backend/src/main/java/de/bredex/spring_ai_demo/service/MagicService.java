@@ -2,10 +2,11 @@ package de.bredex.spring_ai_demo.service;
 
 import java.util.List;
 import java.util.Objects;
-
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import de.bredex.spring_ai_demo.model.MagicCard;
+import de.bredex.spring_ai_demo.model.ModelResponse;
 import de.bredex.spring_ai_demo.util.CardUtil;
 
 @Service

@@ -1,4 +1,4 @@
-package de.bredex.spring_ai_demo.service;
+package de.bredex.spring_ai_demo.model;
 
 import java.util.List;
 
